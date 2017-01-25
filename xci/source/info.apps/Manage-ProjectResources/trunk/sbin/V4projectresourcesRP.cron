@@ -1,0 +1,23 @@
+#!/bin/bash
+
+ME=`basename "$0"`
+
+CACHE=/soft/info/cache/V4projectresourcesRP
+
+# Gather registry document(s)
+/soft/info/bin/cache.V4projectresourcesRP.pl -cache=${CACHE}
+rc=$?
+if [ "$rc" -ne "0" ]; then
+  echo "Exiting '$ME' due to cache.V4projectresourcesRP.pl rc=$rc"
+  exit 1
+fi
+
+XSLTDIR=/soft/info/xslt
+
+OUTPUT=${CACHE}/projectresources.csv
+xsltproc --output ${OUTPUT}.NEW ${XSLTDIR}/projectresourcescsv.xsl ${CACHE}/ActiveProjectResources.xml
+if [[ "$(stat -c%s ${OUTPUT}.NEW)" -gt 100 ]]; then
+   mv ${OUTPUT}.NEW ${OUTPUT}
+fi
+
+#wget -q -O ${TO}/projectresourcescsv.NEW "http://localhost:8080/webmds/webmds?info=tgislocal&xsl=projectresourcescsv"
