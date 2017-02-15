@@ -31,8 +31,7 @@ def fieldlist(arg):
         retval+= c+","
     return retval[:-1]
 
-#default_file = '/Users/blau/endpoint_descriptions/trunk/apps/RouteProjectResources/projectresources.csv'
-default_file = '/soft/warehouse-1.0/PROD/apps/RouteProjectResources/projectresources.csv'
+default_file = '/soft/warehouse-apps-1.0/Manage-ProjectResources/var/projectresources.csv'
 #snarfing the whole database is not the way to do it, for this anyway)
 with open(default_file, 'r') as my_file:
     csv_source_file = csv.DictReader(my_file)
