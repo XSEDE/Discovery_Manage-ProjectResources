@@ -22,6 +22,7 @@ use POSIX;
 #use DBI qw(:sql_types);
 use Getopt::Long;
 use DBD::Pg qw(:pg_types);
+use Text::CSV_XS;
 
 my $DBHOST = 'tgcdb.teragrid.org';
 my $DBNAME = 'teragrid';
