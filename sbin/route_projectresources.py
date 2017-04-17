@@ -32,6 +32,15 @@ def fieldlist(arg):
         retval+= c+","
     return retval[:-1]
 
+class UTC(tzinfo):
+    def utcoffset(self, dt):
+        return timedelta(0)
+    def tzname(self, dt):
+        return 'UTC'
+    def dst(self, dt):
+        return timedelta(0)
+utc = UTC()
+
 #default_file = '/soft/warehouse-apps-1.0/Manage-ProjectResources/var/projectresources.csv'
 default_file = './projectresources.csv'
 #snarfing the whole database is not the way to do it, for this anyway)
@@ -42,6 +51,13 @@ for obj in dbstate:
     dbhash[str(obj['fields']['project_number'])+str(obj['fields']['ResourceID'])]=obj
 with open(default_file, 'r') as my_file:
     csv_source_file = csv.DictReader(my_file)
+    #Start ProcessActivity
+    pa_application=os.path.basename(__file__)
+    pa_function='Warehouse_Speedpage'
+    pa_topic = 'ProjectResources'
+    pa_id = pa_topic+":"+str(datetime.now(utc))
+    pa_about = 'project_affiliation=XSEDE'
+    pa = ProcessingActivity(pa_application, pa_function, pa_id , pa_topic, pa_about)
     for row in csv_source_file:
         #InDBAlready = ProjectResource.objects.filter(**row)
         #if not InDBAlready:
@@ -61,12 +77,6 @@ with open(default_file, 'r') as my_file:
 
             for obj in modelobjects:
                 obj.save()
-                pa_application=os.path.basename(__file__)
-                pa_function='Warehouse_Speedpage'
-                pa_topic = 'ProjectResources'
-                pa_id = pa_topic+":"+row['project_number']+row['ResourceID']
-                pa_about = 'project_affiliation=XSEDE'
-                pa = ProcessingActivity(pa_application, pa_function, pa_id , pa_topic, pa_about)
         
     #print dbhash.keys()
     #print len(dbhash.keys())
@@ -75,4 +85,4 @@ with open(default_file, 'r') as my_file:
         #print dbhash[key]
         ProjectResource.objects.filter(pk=dbhash[key]['pk']).delete()
     
-    
+    pa.FinishActivity(0, "")
