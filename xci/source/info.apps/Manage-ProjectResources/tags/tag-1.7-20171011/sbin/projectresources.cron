@@ -1,0 +1,12 @@
+#!/bin/sh
+LOCATION=/soft/warehouse-apps-1.0/Manage-ProjectResources/
+PRODLOC=$LOCATION/PROD/
+CACHE=$LOCATION/var
+
+DATE=`date +%Y-%m-%dT%H:%M:%SZ`
+#LOG=/soft/info/logs/outages.log
+LOG=$CACHE/projectresources.log
+echo $DATE >> $LOG
+$PRODLOC/sbin/cache.projectresources.pl --cache=$CACHE >> $LOG 2>&1
+
+$PRODLOC/sbin/route_projectresources.sh $CACHE/projectresources.csv
