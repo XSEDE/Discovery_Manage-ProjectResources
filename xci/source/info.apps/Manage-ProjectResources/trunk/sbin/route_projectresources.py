@@ -42,7 +42,8 @@ class UTC(tzinfo):
 utc = UTC()
 
 #default_file = '/soft/warehouse-apps-1.0/Manage-ProjectResources/var/projectresources.csv'
-default_file = './projectresources.csv'
+#default_file = './projectresources.csv'
+default_file = sys.argv[1]
 #snarfing the whole database is not the way to do it, for this anyway)
 databasestate = serializers.serialize("json", ProjectResource.objects.all())
 dbstate = json.loads(databasestate)
@@ -53,9 +54,11 @@ with open(default_file, 'r') as my_file:
     csv_source_file = csv.DictReader(my_file)
     #Start ProcessActivity
     pa_application=os.path.basename(__file__)
-    pa_function='Warehouse_Speedpage'
+    pa_function='main'
     pa_topic = 'ProjectResources'
-    pa_id = pa_topic+":"+str(datetime.now(utc))
+# Updated on 2017-10-11 by JP
+#    pa_id = pa_topic+":"+str(datetime.now(utc))
+    pa_id = pa_topic
     pa_about = 'project_affiliation=XSEDE'
     pa = ProcessingActivity(pa_application, pa_function, pa_id , pa_topic, pa_about)
     for row in csv_source_file:
