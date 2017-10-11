@@ -9,4 +9,4 @@ LOG=$CACHE/projectresources.log
 echo $DATE >> $LOG
 $PRODLOC/sbin/cache.projectresources.pl --cache=$CACHE >> $LOG 2>&1
 
-$PRODLOC/sbin/route_projectresources.sh
+$PRODLOC/sbin/route_projectresources.sh $CACHE/projectresources.csv
