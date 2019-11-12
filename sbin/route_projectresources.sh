@@ -1,6 +1,6 @@
 #!/bin/bash
 APP_BASE=/soft/warehouse-apps-1.0/Manage-ProjectResources
-APP_SOURCE={APP_BASE}/PROD
+APP_SOURCE=${APP_BASE}/PROD
 WAREHOUSE_SOURCE=/soft/warehouse-1.0/PROD
 
 PYTHON_BASE=${APP_BASE}/`cat python/lib/python*/orig-prefix.txt`
