@@ -1,0 +1,12 @@
+#!/bin/sh
+APP_BASE=/soft/warehouse-apps-1.0/Manage-ProjectResources
+APP_SOURCE=${APP_BASE}/PROD
+APP_CACHE=${APP_BASE}/var
+
+DATE=`date +%Y-%m-%dT%H:%M:%SZ`
+LOG=${APP_CACHE}/projectresources.log
+echo $DATE >> $LOG
+
+${APP_SOURCE}/sbin/cache.projectresources.pl --cache=${APP_CACHE} >> $LOG 2>&1
+
+${APP_SOURCE}/sbin/route_projectresources.sh ${APP_CACHE}/projectresources.csv
