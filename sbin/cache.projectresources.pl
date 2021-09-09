@@ -283,12 +283,10 @@ sub escape_xml($) {
 sub resource_name_to_resourceid {
    my $resource_name = shift;
    my $resourceid;
-   if ( $resource_name =~ /(.*)\.anl\.teragrid$/ ) {
-      $resourceid = $1 . '.uc.teragrid.org'; 
-   } elsif ( $resource_name eq 'bluegene.sdsc.teragrid' ) {
-      $resourceid = 'intimidata.sdsc.teragrid.org'; 
-   } else {
+   if ( $resource_name =~ /.*\.xsede$/ ) {
       $resourceid = $resource_name . '.org';
+   } else {
+      $resourceid = $resource_name;
    }
    return($resourceid);
 }
