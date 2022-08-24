@@ -24,13 +24,10 @@ use Getopt::Long;
 use DBD::Pg qw(:pg_types);
 use Text::CSV_XS;
 
-my $DBHOST = 'tgcdb.teragrid.org';
+my $DBHOST = 'tgcdb.xsede.org';
 my $DBNAME = 'teragrid';
 my $DBPORT = 5432;
 my $DBUSER = 'info_services';
-#my $DBPASS = '7F7neder'; 
-#my $DBPASS = '5rtf2qaw';
-my $DBPASS = '8wASpHTC';
 
 my $FALSE  = 0;
 my $TRUE   = 1;
@@ -120,7 +117,7 @@ sub dbconnect {
 
 #  $dbh = DBI->connect( "dbi:Pg:dbname=$DBNAME;host=$DBHOST;port=$DBPORT",
    $dbh = DBI->connect( "dbi:Pg:dbname=$DBNAME;host=$DBHOST;port=$DBPORT;sslmode=require",
-      $DBUSER, $DBPASS, \%args );
+      $DBUSER, undef, \%args );
    dberror( "Can't connect to database: ", $DBI::errstr ) unless ($dbh);
 #  $dbh->do("SET search_path TO acct");
 

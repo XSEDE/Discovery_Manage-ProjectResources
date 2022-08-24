@@ -1,2 +1,5 @@
+tag-1.8-20220824 JP
+  - Remove passwords
+
 tag-1.8-20210909 JP
   - Only append '.org' when resource_name ends in '.xsede'
